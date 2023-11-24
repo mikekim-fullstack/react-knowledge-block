@@ -35,12 +35,12 @@ const Timer = forwardRef((props, ref) => {
     }));
     return (
         <div {...props}  >
-            <div className={`w-44 h-44  border-4 border-sky-500 rounded-full  p-10 flex flex-col justify-center items-center bg-violet-800/${(time % 2) ? 50 : 100} border-sky-${(time % 2) ? 500 : 800} transition-all  duration-500 hover:bg-violet-950`}>
+            <div className={`w-44 h-44  border-4 border-sky-500 rounded-full  p-10 flex flex-col justify-center items-center bg-violet-800/${(time % 2) ? '50' : '100'} border-sky-${(time % 2) ? 500 : 800} transition-all  duration-500 hover:bg-violet-950`}>
                 <p className='text-center'>Timer count </p>
-                <p className='text-center'>
+                <div className='text-center'>
                     <p className='text-2xl font-bold'>{time}</p>
                     <p>sec</p>
-                </p>
+                </div>
             </div>
         </div>
     )
