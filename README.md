@@ -1,3 +1,10 @@
+
+# Installed Package
+# ----- For animation --------
+npm i react-awesome-reveal   # fade animattion
+npm i @headlessui/react      # Transition animation
+npm i swiper -f              # Carousel animation
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
