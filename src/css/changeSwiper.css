@@ -17,3 +17,16 @@
 .swiper-pagination-bullet-active {
     opacity: 1;
 }
+
+.tip {
+    position: relative;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.tip[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    top: 0;
+    left: 0;
+}

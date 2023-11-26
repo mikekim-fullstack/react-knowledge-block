@@ -4,6 +4,8 @@
 npm i react-awesome-reveal   # fade animattion
 npm i @headlessui/react      # Transition animation
 npm i swiper -f              # Carousel animation
+# ------ For Icon -----------
+npm install @heroicons/react
 
 # Getting Started with Create React App
 
