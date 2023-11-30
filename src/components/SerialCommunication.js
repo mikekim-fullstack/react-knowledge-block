@@ -121,7 +121,7 @@ const SerialCommunication = () => {
     // }, [port, reader]);
 
     return (
-        <div className='px-20 py-10 border-2 border-indigo-800 rounded-xl bg-indigo-950'>
+        <div className='px-5 py-10 border-2 border-indigo-800 rounded-xl bg-indigo-950 sm:px-20'>
             <p className='text-center mb-5'>Arduino is {port ? 'connected' : 'disconnected'}.</p>
             <div className='flex gap-2'>
                 <button onClick={handleConnect} className='btnIndigo mb-5'>Connect Arduino</button>

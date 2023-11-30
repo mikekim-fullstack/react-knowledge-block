@@ -70,7 +70,7 @@ export default function TransitionEx1() {
                             <div className="absolute top-0 left-0 ">
                                 {/* <Fade direction="right" duration={500} damping={0.1} cascade={true}> */}
                                 <Fade duration={1000} triggerOnce={true} delay={100} cascade={true}>
-                                    <div className="h-screen text-center bg-gray-300 bg-opacity-[0.95] w-[400px] grid grid-cols-1 gap-10 justify-center items-center">
+                                    <div className="h-screen text-center bg-gray-300 bg-opacity-[0.95] w-[400px] grid grid-cols-1 gap-10 justify-center items-center ">
                                         <div className="flex justify-center items-center">
                                             <button className="btnBlack w-fit py-3">Hello Button</button>
                                         </div>

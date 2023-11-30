@@ -21,70 +21,76 @@ import { Fade } from "react-awesome-reveal";
 import CallTimer from './knowledgeBlock/hooks/imperativeHook/CallTimer';
 import SerialCommunication from './components/SerialCommunication'
 import TransitionEx1 from './knowledgeBlock/headlessui/TransitionEx1';
-import { NavBar, Example1 } from './knowledgeBlock/navbar/NavBar';
+import { NavBar, Example1, Example2 } from './knowledgeBlock/navbar/NavBar';
 import DisclosureEx1 from './knowledgeBlock/headlessui/DisclosureEx1';
 import HeroIconLists from './knowledgeBlock/heroicon/HeroIconLists';
+import { IntersectionEx1 } from './knowledgeBlock/intersectionObserver/InterSectionEx1';
 
 function App() {
   return (
-    <Swiper
-      // install Swiper modules
+    <>
 
-      // **  Somehow EffectFade is not working vividly so I'm using <Fade> **
-      // modules={[Navigation, Pagination, Scrollbar, A11y, EffectFade]}
-      // effect='fade'
-      //----------------------------
-      modules={[Navigation, Pagination, Scrollbar, A11y]}
-      spaceBetween={0}
-      slidesPerView={1}
-      // autoHeight={true}
-      navigation
-      pagination={{ clickable: true }}
-      scrollbar={{ draggable: true }}
-      // onSwiper={(swiper) => console.log(swiper)}
-      // onSlideChange={() => console.log('slide change')}
+      <NavBar />
+      <Swiper
+        // install Swiper modules
 
-      loop={true}
-    >
-      <SwiperSlide>
-        {/* <Fade cascade damping={0.1}> */}
-        <div className="flex flex-col justify-center items-center h-screen">
-          {/* useImperativeHandle */}
-          <Fade cascade damping={0.1}>
-            <CallTimer />
-            <SerialCommunication />
+        // **  Somehow EffectFade is not working vividly so I'm using <Fade> **
+        // modules={[Navigation, Pagination, Scrollbar, A11y, EffectFade]}
+        // effect='fade'
+        //----------------------------
+        modules={[Navigation, Pagination, Scrollbar, A11y]}
+        spaceBetween={0}
+        slidesPerView={1}
+        // autoHeight={true}
+        navigation
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: true }}
+        // onSwiper={(swiper) => console.log(swiper)}
+        // onSlideChange={() => console.log('slide change')}
+
+        loop={true}
+        className=' h-[calc(100vh+4rem)] '
+      >
+        <SwiperSlide>
+          {/* <Fade cascade damping={0.1}> */}
+          <div className="flex flex-col justify-center items-center h-screen">
+            {/* useImperativeHandle */}
+            <Fade cascade damping={0.1}>
+              <CallTimer />
+              <SerialCommunication />
+            </Fade>
+          </div>
+          {/* </Fade> */}
+        </SwiperSlide>
+        <SwiperSlide>
+          <Fade>
+            <TransitionEx1 />
           </Fade>
-        </div>
-        {/* </Fade> */}
-      </SwiperSlide>
-      <SwiperSlide>
-        <Fade>
-          <TransitionEx1 />
-        </Fade>
-      </SwiperSlide>
-      <SwiperSlide>
-        <div className='flex flex-col justify-center items-center  min-h-screen'>
-          <Fade duration={500} damping={0.1} delay={100} cascade={true} className='flex flex-col justify-center items-center'>
-            <p>I enter first...</p>
-            <p>...then comes my turn...</p>
-            <p>...and finally you see me!</p>
-          </Fade>
-        </div>
-      </SwiperSlide>
-      <SwiperSlide>
-        <DisclosureEx1 />
-      </SwiperSlide>
-      <SwiperSlide>
-        <div className='overflow-auto h-screen'>
-          <Example1 />
-          <NavBar />
-          <p>NavBar</p>
-        </div>
-      </SwiperSlide>
-      <SwiperSlide>
-        <HeroIconLists />
-      </SwiperSlide>
-    </Swiper>
+        </SwiperSlide>
+        <SwiperSlide>
+          <div className='flex flex-col justify-center items-center  min-h-screen'>
+            <Fade duration={500} damping={0.1} delay={100} cascade={true} className='flex flex-col justify-center items-center'>
+              <p>I enter first...</p>
+              <p>...then comes my turn...</p>
+              <p>...and finally you see me!</p>
+            </Fade>
+          </div>
+        </SwiperSlide>
+        <SwiperSlide>
+          <DisclosureEx1 />
+        </SwiperSlide>
+        {/* <SwiperSlide>
+          <div className='overflow-auto h-screen'>
+            <Example2 />
+
+          </div>
+        </SwiperSlide> */}
+        <SwiperSlide>
+          <HeroIconLists />
+        </SwiperSlide>
+      </Swiper>
+      <IntersectionEx1 />
+    </>
   );
 }
 
