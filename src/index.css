@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  box-sizing: border-box;
+}
 
 body,
 html {
@@ -23,6 +26,7 @@ code {
 /* For tailwind predefined class */
 @layer base {
   body {
+    /* Changing background color */
     @apply bg-slate-900 text-slate-100;
   }
 

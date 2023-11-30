@@ -1,5 +1,5 @@
-import logo from './logo.svg';
-import './App.css';
+// import logo from './logo.svg';
+// import './App.css';
 
 
 // import Swiper core and required modules
@@ -43,7 +43,7 @@ function App() {
         slidesPerView={1}
         // autoHeight={true}
         navigation
-        pagination={{ clickable: true }}
+        // pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
         // onSwiper={(swiper) => console.log(swiper)}
         // onSlideChange={() => console.log('slide change')}

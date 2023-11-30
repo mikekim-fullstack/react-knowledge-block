@@ -27,14 +27,16 @@ function IntersectionEx1() {
 
 
     return (
-        <section>
+        <section className=''>
             {
                 data.map((item, index) => (
-                    <div key={index} className='my-1 mx-10 py-10 px-3 bg-purple-400 text-black rounded-md'>
-                        {
-                            item
-                        }
-                    </div>
+                    <Fade key={index}>
+                        <div className='  my-1 mx-10 py-10 px-3 bg-purple-400 text-black rounded-md lg:mx-auto lg:w-[80%]'>
+                            {
+                                item
+                            }
+                        </div>
+                    </Fade>
                 ))
             }
             {
