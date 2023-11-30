@@ -15,11 +15,15 @@ function IntersectionEx1() {
                 resolve(
                     Array.from({ length: 10 }, (_, index) => `Item ${(currentPage - 1) * 10 + index + 1}`)
                 );
-            }, 1500);
+            }, 1000);
         });
     };
 
     const { data, isLoading } = useLazyLoad({ targetRef, onGrabData });
+
+    // useEffect(()=>{
+
+    // },[]);
 
 
     return (
@@ -36,7 +40,7 @@ function IntersectionEx1() {
             {
                 isLoading && <p className='text-center text-2xl py-3'>Loading more...</p>
             }
-            <div ref={targetRef}></div>
+            <div ref={targetRef} className='py-3'></div>
         </section>
     );
 

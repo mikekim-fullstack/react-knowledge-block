@@ -7,12 +7,12 @@ const CallTimer = () => {
     const handlePauseTimer = () => refTimer.current.pause();
     const handleResetTimer = () => refTimer.current.reset();
     return (
-        <section className='mb-10'>
+        <section className='mb-10 mt-5'>
             <h1 className='text-2xl uppercase text-center underline underline-offset-4'>Imperative Hook Usage</h1>
             <Timer ref={refTimer} className=' m-10  flex justify-center items-center' />
             <div className='flex justify-center items-center gap-2'>
                 <button className='btnIndigo' onClick={handleStartTimer}>StartTimer</button>
-                <button className='btnIndigo' onClick={handlePauseTimer}>PausTimer</button>
+                <button className='btnIndigo' onClick={handlePauseTimer}>PauseTimer</button>
                 <button className='btnIndigo' onClick={handleResetTimer}>RestTimer</button>
             </div>
         </section>

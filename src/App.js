@@ -49,11 +49,11 @@ function App() {
         // onSlideChange={() => console.log('slide change')}
 
         loop={true}
-        className=' h-[calc(100vh+4rem)] '
+        className=' h-[calc(100vh-4rem)] '
       >
         <SwiperSlide>
           {/* <Fade cascade damping={0.1}> */}
-          <div className="flex flex-col justify-center items-center h-screen">
+          <div className="flex flex-col justify-center items-center">
             {/* useImperativeHandle */}
             <Fade cascade damping={0.1}>
               <CallTimer />
@@ -85,10 +85,9 @@ function App() {
 
           </div>
         </SwiperSlide> */}
-        <SwiperSlide>
-          <HeroIconLists />
-        </SwiperSlide>
+
       </Swiper>
+      <HeroIconLists />
       <IntersectionEx1 />
     </>
   );
