@@ -11,6 +11,12 @@ module.exports = {
           '0%': {
             transform: 'scaleX(0)',
           },
+          // '80%': {
+          //   transform: 'scaleX(0.8)',
+          // },
+          // '92%': {
+          //   transform: 'scaleX(0.95)',
+          // },
           '100%': {
             transform: 'scaleX(1)',
           }
@@ -19,7 +25,7 @@ module.exports = {
       },
       // Animation
       animation: {
-        menuBarHover: 'menuBarHover 0.2s ease-in',
+        menuBarHover: 'menuBarHover 0.12s ease-in-out',
       },
       //------------------------
     },

@@ -1,6 +1,7 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useReducer, useEffect } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon, ShoppingBagIcon, UserIcon, HeartIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'
+import { Fade } from 'react-awesome-reveal'
 import * as All from '@heroicons/react/24/outline'
 import { hover } from '@testing-library/user-event/dist/hover'
 // import { AcademicCapIcon } from '@heroicons/react/20/solid'
@@ -405,67 +406,188 @@ const collectionCss = `
     hover:before:bottom-0 
     hover:before:left-0 
     hover:before:border-b-2 
+    hover:before:rounded 
     hover:before:-mb-[4px]
     hover:before:border-purple-300
     hover:before:animate-menuBarHover
 `;
 
+const initState = {
+    hoveredMenu: null,
+    prev: null,
+    changed: false,
+};
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'set': {
+            return { ...state, ...action.payload };
+        }
+        default:
+            return state;
+    };
+}
 export const NavBar = () => {
-    const [hoveredMenu, setHoveredMenu] = useState(null);
+    // const [hoveredMenu, setHoveredMenu] = useState(null);
+    // let id = -1;
+    const [isChanged, setIsChanged] = useState(false);
+    const [state, dispatch] = useReducer(reducer, initState);
     const onMouseEnter = (id) => {
-        setHoveredMenu(id);
+        // console.log('entering', state.hoveredMenu, id, state.hoveredMenu === id)
+        // id === hoveredMenu ? setPrevMenu(false) : setPrevMenu(true)
+        dispatch({ type: 'set', payload: { hoveredMenu: id, prev: state.hoveredMenu } });
+        // setIsChanged(true);
+        // console.log('mouse entering')
+        // setHoveredMenu(id);
     };
     const onMouseLeave = () => {
-        setHoveredMenu(null);
+        // setHoveredMenu(null);
+
+        dispatch({ type: 'set', payload: { hoveredMenu: null } });
+    };
+    const onMouseLeaveFromCol = () => {
+        // setHoveredMenu(null);
+        // console.log('mouse leaving')
+        // setIsChanged(false);
+        dispatch({ type: 'set', payload: { changed: false } });
     };
     const onClick = (id) => {
-        setHoveredMenu(id);
+
+        // id === hoveredMenu ? setPrevMenu(false) : setPrevMenu(true)
+        // setHoveredMenu(id);
+        dispatch({ type: 'set', payload: { hoveredMenu: id } });
     };
+    const getSubCollection = (id) => {
+        const collection = collections.find((collection) => collection.id === id);
+        return collection?.subCollections;
+    };
+    useEffect(() => {
+        // console.log('isChanged', state);
+        const timerId = setTimeout(() => {
+            dispatch({ type: 'set', payload: { prev: state.hoveredMenu } });
+        }, 0);
+
+        return () => clearTimeout(timerId);
+
+    }, [state.hoveredMenu]);
+
     return (
-        <nav className={`
-            w-full h-20 sticky top-0 z-10  flex items-center px-5
-            ${hoveredMenu === null ? 'backdrop-blur-sm bg-slate-800/80' : ' bg-slate-800'}
-        `}>
-            <div className=' w-full mx-1 flex justify-start items-center gap-8 lg:mx-10'>
-                {/* ------ Menu button */}
-                <Bars3Icon className={`w-8 cursor-pointer lg:hidden `}
-                    onClick={() => onClick(0)}
-                />
-                {/* ------ Logo --------- */}
-                <div className={`
+        <>
+            <nav className={`
+                w-full h-20 sticky top-0 z-10  flex items-center px-5
+                ${state.hoveredMenu === null ? 'backdrop-blur-sm bg-slate-800/80' : ' bg-slate-800'}
+            `}>
+                <div className=' w-full mx-1 flex justify-start items-center gap-8 lg:mx-10'>
+                    {/* ------ Menu button */}
+                    <Bars3Icon className={`w-8 cursor-pointer lg:hidden `}
+                        onClick={() => onClick(0)}
+                    />
+                    {/* ------ Logo --------- */}
+                    <div className={`
                        ${logoCss} lg:static lg:flex lg:items-center   lg:transform-none
                 `}>
-                    <img src="/logo192.png" alt="logo" className={`h-9 w-9  `} />
-                </div>
-                {/* -------- collections (absolute:center) ------------- */}
-                <ul className={`hidden first-letter:${ulCss}`}>
-                    {
-                        collections.map(collection => (
-                            <li key={collection.id} className={`
-                                ${hoveredMenu === null ? 'text-white' : hoveredMenu === collection.id ? 'text-white' : 'text-slate-400'}
-                                text-md font-bold    px-5 
+                        <img src="/logo192.png" alt="logo" className={`h-9 w-9  `} />
+                    </div>
+                    {/* -------- collections title lists (absolute:center) ------------- */}
+                    <ul className={`hidden ${ulCss}`}>
+                        {
+                            collections.map(collection => (
+                                <li key={collection.id} className={`
+                                ${state.hoveredMenu === null ? 'text-white' : state.hoveredMenu === collection.id ? 'text-white' : 'text-slate-400'}
+                                text-md font-bold    px-5 relative  
                                 `}
-                                onMouseEnter={() => onMouseEnter(collection.id)}
-                                onMouseLeave={() => onMouseLeave()}
-                                onClick={(e) => onClick(collection.id)}
+                                    // onMouseLeave={() => onMouseLeaveFromCol()}
+                                    onMouseEnter={() => onMouseEnter(collection.id)}
+
+                                    onClick={(e) => onClick(collection.id === state.hoveredMenu ? null : collection.id)}
+                                >
+                                    <h3 className={`relative text-base py-6 cursor-pointer `}>
+                                        {collection.title}
+                                        {/* Draw underline */}
+                                        {
+                                            state.hoveredMenu === collection.id ? (
+                                                <hr className='absolute -bottom-[4px] left-0 w-full h-[3px] border-0 bg-purple-900 rounded-3xl animate-menuBarHover' />
+                                            ) : ''
+                                        }
+                                    </h3>
+                                </li>
+                            ))
+                        }
+                    </ul>
+
+                    <MagnifyingGlassIcon className={` ${iconCss} lg:ml-auto`} />
+                    <HeartIcon className={`${iconCss} ml-auto lg:ml-0`} />
+                    <UserIcon className={iconCss} />
+                    <ShoppingBagIcon className={iconCss} />
+                </div>
+                {/* ------- Show the panel of sub-collections when a mouse is over the collections title -------- */}
+                {/* {console.log(state.hoveredMenu)} */}
+                {
+                    state.hoveredMenu === null ? '' : (
+                        <Fade duration={200}
+
+                        >
+                            {/* Backdrop to blur the background of menu panel */}
+                            <div className='absolute top-20 left-0 w-full h-screen backdrop-blur-sm bg-black/80'
+                                onMouseEnter={() => onMouseLeave()}
+                            ></div>
+                            {/* menus panel */}
+                            <div className={`absolute top-20 left-0 w-full bg-slate-800
+
+                                `}
+                            // onMouseLeave={() => onMouseLeave()}
                             >
-                                <p className={`relative  py-6 cursor-pointer ${collectionCss}`}>
-                                    {collection.title}
-                                </p>
-                            </li>
-                        ))
-                    }
-                </ul>
+                                {/* draw the horizontal line between the top menubar and sub-collections menu */}
+                                <hr className='h-[0.7px] bg-gray-900 border-0 rounded' />
+                                {/* ----- Display the sub-collections ----- */}
+                                <div className=' w-full min-h-[400px]  py-5 flex justify-center gap-10 ' >
+                                    {
+                                        getSubCollection(state.hoveredMenu)?.map((subCollection) => (
+                                            <div key={subCollection.id} className=' '>
+                                                {/* --- sub collection title --- */}
+                                                {
+                                                    state.hoveredMenu !== state.prev ? <div></div> :
+                                                        <Transition
+                                                            appear={true}
+                                                            show={true}
+                                                            enter="transition-opacity duration-150"
+                                                            enterFrom="opacity-40"
+                                                            enterTo="opacity-100"
+                                                            leave="transition-opacity duration-20"
+                                                            leaveFrom="opacity-100"
+                                                            leaveTo="opacity-0"
+                                                        >
 
-                <MagnifyingGlassIcon className={` ${iconCss} lg:ml-auto`} />
-                <HeartIcon className={`${iconCss} ml-auto lg:ml-0`} />
-                <UserIcon className={iconCss} />
-                <ShoppingBagIcon className={iconCss} />
+                                                            <h3 className='text-base font-bold pb-1 '>{subCollection.title}</h3>
+                                                            {
+                                                                // ---- menu links ----
+                                                                subCollection.menus.map((menu) => (
+                                                                    <ul key={menu.id} className=''>
+                                                                        <li className='pb-1 text-base text-gray-400 '>
+                                                                            <a href={menu.href}
+                                                                                className='hover:text-white transition hover:duration-100 hover:ease-in'
+                                                                                onClick={() => onClick(null)}
+                                                                            >
+                                                                                {menu.name}
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                ))
+                                                                //------------------------
+                                                            }
+                                                        </Transition>
+                                                }
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                        </Fade>
+                    )
+                }
+            </nav>
+            {/* {console.log('hoveredMenu: ', hoveredMenu, ', status:', hoveredMenu ?? 'not null')} */}
 
-
-            </div>
-
-        </nav>
+        </>
     );
 };
 export const NavBarTest = () => {
